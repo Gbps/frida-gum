@@ -2187,6 +2187,13 @@ writer_enums = {
             "eq", "ne", "hs", "lo", "mi", "pl", "vs", "vc",
             "hi", "ls", "ge", "lt", "gt", "le", "al",
         ]),
+        ("arm_index_mode", "GumArmIndexMode", "GUM_INDEX_", [
+            "neg", "pos",
+        ]),
+        ("arm_shifter", "arm_shifter", "ARM_SFT_", [
+            "asr", "lsl", "lsr", "ror", "rrx", "asr-reg", "lsl-reg", "lsr-reg",
+            "ror-reg", "rrx-reg",
+        ]),
     ],
     "thumb": [],
     "arm64": [
@@ -2978,6 +2985,16 @@ class MethodArgument(object):
             self.type_format = "s"
             self.type_ts = "ArmConditionCode" if type == "arm_cc" else "Arm64ConditionCode"
             converter = "condition_code"
+        elif type == "arm_shifter":
+            self.type_raw = "const gchar *"
+            self.type_format = "s"
+            self.type_ts = "arm_shifter"
+            converter = "shifter"
+        elif type == "GumArmIndexMode":
+            self.type_raw = "const gchar *"
+            self.type_format = "s"
+            self.type_ts = "ArmIndexMode"
+            converter = "index_mode"
         elif type == "GumArm64IndexMode":
             self.type_raw = "const gchar *"
             self.type_format = "s"
